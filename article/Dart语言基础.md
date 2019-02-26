@@ -197,4 +197,27 @@ void enableFlags({bool bold, bool hidden}) {
 
 我们可以发现，可选命名参数，比起普通的函数，看起来更加清晰。
 
-可选位置参数是指，
+可选位置参数是指，某个参数，可以传，也可以不传，比如下面这个方法：
+
+```dart
+void say(String from, String msg, [String device]) {
+  
+}
+```
+
+上面这个方法有 3 个参数，`from` 和 `msg` 是必填参数，调用的时候必须要传入。`device` 是可选位置参数，调用的时候，可以传，也可以不传。
+
+传入 `device` 参数：
+
+```dart
+say('a', 'b', 'c');
+```
+
+不传入 `device` 参数：
+
+```dart
+say('a', 'b');
+```
+
+### 异步
+
