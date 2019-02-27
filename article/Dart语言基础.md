@@ -221,3 +221,52 @@ say('a', 'b');
 
 ### 异步
 
+Dart 中是用 `await` 和 `async` 来表示异步的，我们先看一个简单的例子。
+
+```dart
+Future<int> returnNum() async {
+  await Future.delayed(new Duration(seconds: 2));
+  print('returnNum 方法执行完毕');
+  return 1;
+}
+```
+
+Future.delayed 方法的作用是延时 2 秒钟，相当于 Java 中的 `Thread.sleep()` 方法。
+
+我们在 `returnNum` 方法中调用了 `Future.delayed` 方法，调用的时候，前面加了 `await`，那么，相应的，`returnNum` 方法，就要加 `async` 方法来修饰。从这里我们可以看出，`await` 和 `async` 是成对出现的。但是要注意，有了 `await`，一定会有 `async`，但是有了 `async`，不一定会有 `await`。
+
+接下来，我们来调用 `returnNum` 方法：
+
+```dart
+print('开始执行');
+int result = await returnNum();
+print('执行完毕');
+```
+
+输出：
+
+```dart
+开始执行
+[停顿 2 秒]
+returnNum 方法执行完毕
+执行完毕
+```
+
+因为 `returnNum` 方法的返回值是 `Future<String>` 类型，而我们需要的是 String 类型，没办法直接拿来用，所以要在 `returnNum` 方法的前面加上 `await`，这个时候我们就可以获取到 String 类型的结果了。
+
+除了用 `await` 来取出 `Future<String>` 中的 String，我们还可以用 `Future.then` 来取出 `Future<String>` 中的 String。
+
+```dart
+returnNum().then((result) {
+	print('returnNum 返回结果：$result');
+});
+```
+
+`returnNum` 方法的执行结果会传给 `result`，这时我们再读取 `result` 的值就可以了。上面的代码中，我们还用到了 `$` 用来拼接字符串。
+
+```dart
+print('returnNum 返回结果：$result');
+print('returnNum 返回结果：' + result.toString());
+```
+
+上面两句代码是等效的。
